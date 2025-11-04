@@ -9,6 +9,10 @@ import About from '../pages/About/About';
 import AllProducts from '../pages/Products/AllProducts/AllProducts';
 import Services from '../pages/Services/Services';
 import Contact from '../pages/Contact/Contact';
+import Register from '../pages/Auth/Register/Register';
+import MyBids from '../pages/Bids/MyBids/MyBids';
+import CreateProduct from '../pages/Products/CreateProduct/CreateProduct';
+import PrivateRoute from './PrivateRoute';
 
 export const router = createBrowserRouter([
   // MainLayout Routes
@@ -19,7 +23,7 @@ export const router = createBrowserRouter([
       { index: true, Component: () => <Navigate to="home" replace /> },
       { path: 'home', Component: Home },
       { path: 'about', Component: About },
-      { path: 'all-products', Component: AllProducts },
+      { path: 'products/all', Component: AllProducts },
       { path: 'services', Component: Services },
       { path: 'contact', Component: Contact },
     ],
@@ -28,10 +32,16 @@ export const router = createBrowserRouter([
   // DashboardLayout Routes
   {
     path: '/dashboard',
-    Component: DashboardLayout,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
-      { index: true, Component: () => <Navigate to="my-products" replace /> },
-      { path: 'my-products', Component: MyProducts },
+      { index: true, Component: () => <Navigate to="products/user" replace /> },
+      { path: 'products/user', Component: MyProducts },
+      { path: 'bids/user', Component: MyBids },
+      { path: 'products/create', Component: CreateProduct },
     ],
   },
 
@@ -42,6 +52,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: () => <Navigate to="login" replace /> },
       { path: 'login', Component: Login },
+      { path: 'register', Component: Register },
     ],
   },
 ]);

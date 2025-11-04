@@ -1,16 +1,43 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Container from '../../common/Container/Container';
 import NavItem from './components/NavItem/NavItem';
 import { Link } from 'react-router';
+import { AuthContext } from '../../../contexts/AuthContext';
+import toast from 'react-hot-toast';
+import Loader from '../../common/Loader/Loader';
 
 const Header = () => {
+  const { user, loading, signOutUser } = useContext(AuthContext);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        toast.success('Successfully Logout');
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+
   const navLinks = (
     <>
       <NavItem to="/home">Home</NavItem>
       <NavItem to="/about">About</NavItem>
-      <NavItem to="/all-products">All Products</NavItem>
+      <NavItem to="/products/all">All Products</NavItem>
       <NavItem to="/services">Services</NavItem>
       <NavItem to="/contact">Contact</NavItem>
+    </>
+  );
+
+  const dashboardNavLinks = (
+    <>
+      <NavItem to="/dashboard/products/user">My Products</NavItem>
+      <NavItem to="/dashboard/bids/user">My Bids</NavItem>
+      <NavItem to="/dashboard/products/create">Create Product</NavItem>
     </>
   );
 
@@ -51,15 +78,37 @@ const Header = () => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1 gap-5">{navLinks}</ul>
+          <ul className="menu menu-horizontal px-1 gap-5">
+            {navLinks}
+            {user && dashboardNavLinks}
+          </ul>
         </div>
         <div className="navbar-end">
-          <Link
-            to="/auth"
-            className="px-3 py-1.5 rounded-md font-medium bg-linear-to-br from-[#ee0979] to-[#ff6a00] text-white transition-all duration-200 ease-in-out"
-          >
-            Login
-          </Link>
+          {user ? (
+            <div className="flex justify-between items-center gap-2">
+              <div className="border border-[lime] p-0.5 rounded-full overflow-hidden w-10">
+                <img
+                  src={user?.photoURL}
+                  alt={user?.displayName}
+                  className="rounded-full"
+                  title={user?.displayName}
+                />
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="px-3 py-1.5 rounded-md font-medium bg-linear-to-br from-[#ee0979] to-[#ff6a00] text-white transition-all duration-200 ease-in-out"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/auth"
+              className="px-3 py-1.5 rounded-md font-medium bg-linear-to-br from-[#ee0979] to-[#ff6a00] text-white transition-all duration-200 ease-in-out"
+            >
+              Login
+            </Link>
+          )}
         </div>
       </Container>
     </div>
