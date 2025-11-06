@@ -15,7 +15,7 @@ const Register = () => {
       image: e.target.image.value,
       password: e.target.password.value,
     };
-    console.log(formData);
+    // console.log(formData);
 
     createUser(formData.email, formData.password);
   };
@@ -24,7 +24,25 @@ const Register = () => {
     signInWithGoogle()
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
+        const newUser = {
+          name: user.displayName,
+          email: user.email,
+          image: user.photoURL,
+        };
+
+        // create user in the database
+        fetch('http://localhost:3000/users', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log('Data after user save : ', data);
+          });
         toast.success('Login with Google Successfully');
       })
       .catch((error) => {

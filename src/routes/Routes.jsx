@@ -13,6 +13,8 @@ import Register from '../pages/Auth/Register/Register';
 import MyBids from '../pages/Bids/MyBids/MyBids';
 import CreateProduct from '../pages/Products/CreateProduct/CreateProduct';
 import PrivateRoute from './PrivateRoute';
+import ProductDetails from '../pages/Products/ProductDetails/ProductDetails';
+import Loader from '../components/common/Loader/Loader';
 
 export const router = createBrowserRouter([
   // MainLayout Routes
@@ -42,6 +44,13 @@ export const router = createBrowserRouter([
       { path: 'products/user', Component: MyProducts },
       { path: 'bids/user', Component: MyBids },
       { path: 'products/create', Component: CreateProduct },
+      {
+        path: 'product/details/:id',
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/products/${params.id}`),
+        Component: ProductDetails,
+        hydrateFallbackElement: () => <Loader />,
+      },
     ],
   },
 
