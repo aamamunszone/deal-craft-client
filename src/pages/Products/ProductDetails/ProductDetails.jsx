@@ -68,13 +68,17 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3000/products/bids/${_id}`)
+    fetch(`http://localhost:3000/products/bids/${_id}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         // console.log('Bids for this product : ', data);
         setBids(data);
       });
-  }, [_id]);
+  }, [_id, user]);
 
   return (
     <div>
@@ -150,7 +154,7 @@ const ProductDetails = () => {
               {/* body */}
               <tbody>
                 {bids.map((bid, index) => (
-                  <tr>
+                  <tr key={bid._id}>
                     <th>{index + 1}</th>
                     <td>
                       <div className="flex items-center gap-3">
