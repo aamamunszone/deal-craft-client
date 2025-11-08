@@ -3,6 +3,7 @@ import { useLoaderData } from 'react-router';
 import Container from '../../../components/common/Container/Container';
 import { AuthContext } from '../../../contexts/AuthContext';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const ProductDetails = () => {
   const [bids, setBids] = useState([]);
@@ -67,18 +68,25 @@ const ProductDetails = () => {
       });
   };
 
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/products/bids/${_id}`, {
+  //     headers: {
+  //       authorization: `Bearer ${user.accessToken}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // console.log('Bids for this product : ', data);
+  //       setBids(data);
+  //     });
+  // }, [_id, user]);
+
   useEffect(() => {
-    fetch(`http://localhost:3000/products/bids/${_id}`, {
-      headers: {
-        authorization: `Bearer ${user.accessToken}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log('Bids for this product : ', data);
-        setBids(data);
-      });
-  }, [_id, user]);
+    axios.get(`http://localhost:3000/products/bids/${_id}`).then((data) => {
+      console.log('after axios get : ', data);
+      setBids(data.data);
+    });
+  }, [_id]);
 
   return (
     <div>

@@ -2,9 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../contexts/AuthContext';
 import Container from '../../../components/common/Container/Container';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const MyBids = () => {
   const { user } = useContext(AuthContext);
+
+  const instance = useAxiosSecure();
 
   const [myBids, setMyBids] = useState([]);
 
@@ -23,20 +26,26 @@ const MyBids = () => {
   //   }
   // }, [user]);
 
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     fetch(`http://localhost:3000/bids?email=${user.email}`, {
+  //       headers: {
+  //         authorization: `Bearer ${localStorage.getItem('token')}`,
+  //       },
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         // console.log('Data after getting My Bids : ', data);
+  //         setMyBids(data);
+  //       });
+  //   }
+  // }, [user]);
+
   useEffect(() => {
-    if (user?.email) {
-      fetch(`http://localhost:3000/bids?email=${user.email}`, {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log('Data after getting My Bids : ', data);
-          setMyBids(data);
-        });
-    }
-  }, [user]);
+    instance.get(`/bids?email=${user.email}`).then((data) => {
+      setMyBids(data.data);
+    });
+  }, [instance, user]);
 
   const handleDeleteBid = (_id) => {
     Swal.fire({
