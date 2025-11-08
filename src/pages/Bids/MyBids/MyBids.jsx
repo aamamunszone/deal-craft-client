@@ -13,7 +13,7 @@ const MyBids = () => {
 
   // useEffect(() => {
   //   if (user?.email) {
-  //     fetch(`http://localhost:3000/bids?email=${user.email}`, {
+  //     fetch(`https://deal-craft-server-theta.vercel.app/bids?email=${user.email}`, {
   //       headers: {
   //         authorization: `Bearer ${user.accessToken}`,
   //       },
@@ -28,7 +28,7 @@ const MyBids = () => {
 
   // useEffect(() => {
   //   if (user?.email) {
-  //     fetch(`http://localhost:3000/bids?email=${user.email}`, {
+  //     fetch(`https://deal-craft-server-theta.vercel.app/bids?email=${user.email}`, {
   //       headers: {
   //         authorization: `Bearer ${localStorage.getItem('token')}`,
   //       },
@@ -58,7 +58,7 @@ const MyBids = () => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/bids/${_id}`, {
+        fetch(`https://deal-craft-server-theta.vercel.app/bids/${_id}`, {
           method: 'DELETE',
           headers: {
             'content-type': 'application/json',

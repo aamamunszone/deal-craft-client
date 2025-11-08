@@ -39,7 +39,7 @@ const ProductDetails = () => {
       status: 'pending',
     };
 
-    fetch('http://localhost:3000/bids', {
+    fetch('https://deal-craft-server-theta.vercel.app/bids', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -69,7 +69,7 @@ const ProductDetails = () => {
   };
 
   // useEffect(() => {
-  //   fetch(`http://localhost:3000/products/bids/${_id}`, {
+  //   fetch(`https://deal-craft-server-theta.vercel.app/products/bids/${_id}`, {
   //     headers: {
   //       authorization: `Bearer ${user.accessToken}`,
   //     },
@@ -82,10 +82,12 @@ const ProductDetails = () => {
   // }, [_id, user]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/products/bids/${_id}`).then((data) => {
-      console.log('after axios get : ', data);
-      setBids(data.data);
-    });
+    axios
+      .get(`https://deal-craft-server-theta.vercel.app/products/bids/${_id}`)
+      .then((data) => {
+        console.log('after axios get : ', data);
+        setBids(data.data);
+      });
   }, [_id]);
 
   return (

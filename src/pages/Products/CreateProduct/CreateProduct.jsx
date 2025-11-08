@@ -29,7 +29,7 @@ const CreateProduct = () => {
       seller_name: user.displayName,
     };
 
-    //   axios.post('http://localhost:3000/products', newProduct).then((data) => {
+    //   axios.post('https://deal-craft-server-theta.vercel.app/products', newProduct).then((data) => {
     //     console.log(data.data);
     //     if (data.data.insertedId) {
     //       Swal.fire({

@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
       if (currentUser) {
         const loggedUser = { email: currentUser.email };
-        fetch('http://localhost:3000/getToken', {
+        fetch('https://deal-craft-server-theta.vercel.app/getToken', {
           method: 'POST',
           headers: {
             'content-type': 'application/json',

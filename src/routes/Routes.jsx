@@ -47,7 +47,9 @@ export const router = createBrowserRouter([
       {
         path: 'product/details/:id',
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/products/${params.id}`),
+          fetch(
+            `https://deal-craft-server-theta.vercel.app/products/${params.id}`
+          ),
         Component: ProductDetails,
         hydrateFallbackElement: () => <Loader />,
       },

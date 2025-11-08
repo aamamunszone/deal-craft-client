@@ -4,7 +4,7 @@ import RecentProducts from '../Products/RecentProducts/RecentProducts';
 import Loader from '../../components/common/Loader/Loader';
 
 const recentProductsPromise = fetch(
-  'http://localhost:3000/products/recent'
+  'https://deal-craft-server-theta.vercel.app/products/recent'
 ).then((res) => res.json());
 
 const Home = () => {
